@@ -180,3 +180,43 @@ regex.test('111r')
 // false
 ```
 
+**例子：**
+
+密码长度6-12位，由数字、小写字符和大写字母组成，但必须至少包括2种字符。
+
+分析：这个问题应该拆分为 由6-12位数字、大小写字母组成  +  至少包含两种字符
+
+```js
+// 由6-12位数字、大小写字母组成
+var reg = /^[0-9A-Za-z]{6,12}$/;
+// 至少包含某种字符
+var reg = /(?=.*[0-9])^/
+// 结合一下，至少包含数字和小写字符的6-12位字符
+var reg = /(?=.*[0-9])(?=.*[a-z])^[0-9A-Za-z]{6,12}$/;
+// 结合每种情况
+var reg = /((?=.*[0-9])(?=.*[a-z])|(?=.*[0-9])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z]))^[0-9A-Za-z]{6,12}$/;
+console.log( reg.test("1234567") ); // false 全是数字
+console.log( reg.test("abcdef") ); // false 全是小写字母
+console.log( reg.test("ABCDEFGH") ); // false 全是大写字母
+console.log( reg.test("ab23C") ); // false 不足6位
+console.log( reg.test("ABCDEF234") ); // true 大写字母和数字
+console.log( reg.test("abcdEF234") ); // true 三者都有
+```
+
+或者说，这个正则可以理解为不能只是某一种字符
+
+```js
+// 不能全是数字
+var reg = /(?!^[0-9]{6,12}$)^[0-9A-Za-z]{6,12}$/;
+// 最终答案
+var reg = /(?!^[0-9]{6,12}$)(?!^[a-z]{6,12}$)(?!^[A-Z]{6,12}$)^[0-9A-Za-z]{6,12}$/;
+console.log( reg.test("1234567") ); // false 全是数字
+console.log( reg.test("abcdef") ); // false 全是小写字母
+console.log( reg.test("ABCDEFGH") ); // false 全是大写字母
+console.log( reg.test("ab23C") ); // false 不足6位
+console.log( reg.test("ABCDEF234") ); // true 大写字母和数字
+console.log( reg.test("abcdEF234") ); // true 三者都有
+```
+
+## 正则中的解析
+
