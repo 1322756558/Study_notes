@@ -856,3 +856,11 @@ console.log( RegExp["$'"] );
 // => "d4e5"
 ```
 
+### 参考
+
+https://juejin.cn/post/6844903487155732494#heading-39
+
+### 正则可视化
+
+https://jex.im/regulex/#
+
