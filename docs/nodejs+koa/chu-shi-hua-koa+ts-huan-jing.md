@@ -1,12 +1,14 @@
+# 初始化koa+ts环境
+
 1. 初始化npm
 
 > npm init
 
-2. yarn 装包
+1. yarn 装包
 
-> yarn add koa koa-router  
+> yarn add koa koa-router
 >
-> yarn add @types/koa @types/koa-router  --dev
+> yarn add @types/koa @types/koa-router --dev
 
 安装热编译环境
 
@@ -16,17 +18,17 @@
 
 > yarn global add ts-node nodemon
 
-3. 配置package.json
+1. 配置package.json
 
 > "scripts": {
 >
-> ​    "start": "nodemon --watch src -e ts,tsx --exec ts-node src/server.ts"
+> ​ "start": "nodemon --watch src -e ts,tsx --exec ts-node src/server.ts"
 >
->  }
+> }
 
-4. 添加tsconfig.json
+1. 添加tsconfig.json
 
-```js
+```javascript
 {
   "compilerOptions": {
     // 编译目标
@@ -56,7 +58,6 @@
   },
   "include": ["src/**/*"]
 }
-
 ```
 
 5.

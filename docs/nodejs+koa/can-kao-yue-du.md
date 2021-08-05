@@ -1,3 +1,5 @@
+# 参考阅读
+
 ## 起步
 
 Koa 作为 Express 原班人马打造的新生代 Node.js Web 框架，自从发布以来就备受瞩目。正如 Koa 作者们在文档中所指出的：
@@ -14,46 +16,46 @@ Koa 作为 Express 原班人马打造的新生代 Node.js Web 框架，自从发
 
 本教程假定你已经具备了以下知识：
 
-- JavaScript 语言基础知识（包括一些常用的 ES6+ 语法）
-- Node.js 基础知识，还有 npm 的基本使用，可以参考[这篇教程](https://tuture.co/2019/12/03/892fa12/)进行学习
-- TypeScript 基础知识，只需了解简单的类型注解就可以了，可以参考我们的 [TypeScript 系列教程](https://tuture.co/tags/TypeScript/)
-- *（非必须）*Express 框架基础知识，对于体验 Koa 之美大有帮助，而且在本文中我们会大量穿插和 Express 的对比，可参考[这篇教程](https://tuture.co/2019/11/26/cd5b993/)进行学习
+* JavaScript 语言基础知识（包括一些常用的 ES6+ 语法）
+* Node.js 基础知识，还有 npm 的基本使用，可以参考[这篇教程](https://tuture.co/2019/12/03/892fa12/)进行学习
+* TypeScript 基础知识，只需了解简单的类型注解就可以了，可以参考我们的 [TypeScript 系列教程](https://tuture.co/tags/TypeScript/)
+* _（非必须）_Express 框架基础知识，对于体验 Koa 之美大有帮助，而且在本文中我们会大量穿插和 Express 的对比，可参考[这篇教程](https://tuture.co/2019/11/26/cd5b993/)进行学习
 
 ### 所用技术
 
-- Node.js：10.x 及以上
-- npm：6.x 及以上
-- Koa：2.x
-- MySQL：推荐稳定的 5.7 版本及以上
-- TypeORM：0.2.x
+* Node.js：10.x 及以上
+* npm：6.x 及以上
+* Koa：2.x
+* MySQL：推荐稳定的 5.7 版本及以上
+* TypeORM：0.2.x
 
 ### 学习目标
 
 学完这篇教程，你将学会：
 
-- 如果编写 Koa 中间件
-- 通过 `@koa/router` 实现路由配置
-- 通过 TypeORM 连接和读写 MySQL 数据库（其他数据库都类似）
-- 了解 JWT 鉴权的原理，并动手实现
-- 掌握 Koa 的错误处理机制
+* 如果编写 Koa 中间件
+* 通过 `@koa/router` 实现路由配置
+* 通过 TypeORM 连接和读写 MySQL 数据库（其他数据库都类似）
+* 了解 JWT 鉴权的原理，并动手实现
+* 掌握 Koa 的错误处理机制
 
 ### 准备初始代码
 
 我们已经为你准备好了项目的脚手架，运行以下命令克隆我们的初始代码：
 
-```shell
+```text
 git clone -b start-point https://github.com/tuture-dev/koa-quickstart.git
 ```
 
 如果你访问 GitHub 不流畅，可以克隆我们的 Gitee 仓库：
 
-```shell
+```text
 git clone -b start-point https://gitee.com/tuture/koa-quickstart.git
 ```
 
 然后进入项目，安装依赖：
 
-```shell
+```text
 cd koa-quickstart && npm install
 ```
 
@@ -177,7 +179,7 @@ ctx.status; // 相当于 ctx.response.status
 
 关于所有请求和响应上面的属性及其别称，请参考 Context API 文档。
 
-中间件的第二个参数便是 `next` 函数，这个熟悉 Express 的同学一定知道它是干什么的：用来把控制权转交给下一个中间件。但是它跟 Express 的 `next` 函数本质的区别在于，**Koa 的 \****`next`**** 函数返回的是一个 Promise**，在这个 Promise 进入完成状态（Fulfilled）后，就会去执行中间件中第二阶段的代码。
+中间件的第二个参数便是 `next` 函数，这个熟悉 Express 的同学一定知道它是干什么的：用来把控制权转交给下一个中间件。但是它跟 Express 的 `next` 函数本质的区别在于，**Koa 的 \*\***`next`**\*\* 函数返回的是一个 Promise**，在这个 Promise 进入完成状态（Fulfilled）后，就会去执行中间件中第二阶段的代码。
 
 那么我们不禁要问：这样把中间件的执行拆分为两个阶段，到底有什么好处吗？我们来通过一个非常经典的例子来感受一下：日志记录中间件（包括响应时间的计算）。
 
@@ -216,7 +218,7 @@ export function logger() {
 // ...
 
 import { logger } from './logger';
- 
+
 // 初始化 Koa 应用实例
 const app = new Koa();
 
@@ -238,7 +240,7 @@ app.use(bodyParser());
 
 由于 Koa 只是一个中间件框架，所以路由的实现需要独立的 npm 包。首先安装 `@koa/router` 及其 TypeScript 类型定义：
 
-```shell
+```text
 $ npm install @koa/router
 $ npm install @types/koa__router -D
 ```
@@ -251,12 +253,12 @@ $ npm install @types/koa__router -D
 
 在这篇教程中，我们将实现以下路由：
 
-- `GET /users` ：查询所有的用户
-- `GET /users/:id` ：查询单个用户
-- `PUT /users/:id` ：更新单个用户
-- `DELETE /users/:id` ：删除单个用户
-- `POST /users/login` ：登录（获取 JWT Token）
-- `POST /users/register` ：注册用户
+* `GET /users` ：查询所有的用户
+* `GET /users/:id` ：查询单个用户
+* `PUT /users/:id` ：更新单个用户
+* `DELETE /users/:id` ：删除单个用户
+* `POST /users/login` ：登录（获取 JWT Token）
+* `POST /users/register` ：注册用户
 
 ### 实现 Controller
 
@@ -365,7 +367,7 @@ app.listen(3000);
 
 我们通过 Curl 来测试路由（也可以自行使用 Postman）：
 
-```shell
+```text
 $ curl localhost:3000/hello
 Not Found
 $ curl localhost:3000/auth/register
@@ -398,18 +400,18 @@ DeleteUser controller with ID = 123
 
 首先，请安装和配置好 MySQL 数据库，可以通过两种方式：
 
-- 官网下载安装包，这里是下载地址
-- 使用 MySQL Docker 镜像
+* 官网下载安装包，这里是下载地址
+* 使用 MySQL Docker 镜像
 
 在确保 MySQL 实例运行之后，我们打开终端，通过命令行连接数据库：
 
-```shell
+```text
 $ mysql -u root -p
 ```
 
 输入预先设置好的根帐户密码之后，就进入了 MySQL 的交互式执行客户端，然后运行以下命令：
 
-```shell
+```text
 --- 创建数据库
 CREATE DATABASE koa;
 
@@ -426,13 +428,13 @@ flush privileges;
 
 首先安装相关的 npm 包，分别是 MySQL 驱动、TypeORM 及 `reflect-metadata`（反射 API 库，用于 TypeORM 推断模型的元数据）：
 
-```shell
+```text
 $ npm install mysql typeorm reflect-metadata
 ```
 
 然后在项目根目录创建 `ormconfig.json` ，TypeORM 会读取这个数据库配置进行连接，代码如下：
 
-```json
+```javascript
 // ormconfig.json
 {
   "type": "mysql",
@@ -451,9 +453,9 @@ $ npm install mysql typeorm reflect-metadata
 
 这里有一些需要解释的字段：
 
-- `database` 就是我们刚刚创建的 `koa` 数据库
-- `synchronize` 设为 `true` 能够让我们每次修改模型定义后都能自动同步到数据库*（如果你接触过其他的 ORM 库，其实就是自动数据迁移）*
-- `entities` 字段定义了模型文件的路径，我们马上就来创建
+* `database` 就是我们刚刚创建的 `koa` 数据库
+* `synchronize` 设为 `true` 能够让我们每次修改模型定义后都能自动同步到数据库_（如果你接触过其他的 ORM 库，其实就是自动数据迁移）_
+* `entities` 字段定义了模型文件的路径，我们马上就来创建
 
 接着修改 `src/server.ts`，在其中连接数据库，代码如下：
 
@@ -523,9 +525,9 @@ export class User {
 
 可以看到，用户模型有四个字段，其含义很容易理解。而 TypeORM 则是通过装饰器这种优雅的方式来将我们的 `User` 类映射到数据库中的表。这里我们使用了三个装饰器：
 
-- `Entity` 用于装饰整个类，使其变成一个数据库模型
-- `Column` 用于装饰类的某个属性，使其对应于数据库表中的一列，可提供一系列选项参数，例如我们给 `password` 设置了 `select: false` ，使得这个字段在查询时默认不被选中
-- `PrimaryGeneratedColumn` 则是装饰主列，它的值将自动生成
+* `Entity` 用于装饰整个类，使其变成一个数据库模型
+* `Column` 用于装饰类的某个属性，使其对应于数据库表中的一列，可提供一系列选项参数，例如我们给 `password` 设置了 `select: false` ，使得这个字段在查询时默认不被选中
+* `PrimaryGeneratedColumn` 则是装饰主列，它的值将自动生成
 
 **提示**
 
@@ -539,7 +541,7 @@ export class User {
 // src/controllers/user.ts
 import { Context } from 'koa';
 import { getManager } from 'typeorm';
- 
+
 import { User } from '../entity/user';
 
 export default class UserController {
@@ -547,7 +549,7 @@ export default class UserController {
     ctx.body = 'ListUsers controller';
     const userRepository = getManager().getRepository(User);
     const users = await userRepository.find();
- 
+
     ctx.status = 200;
     ctx.body = users;
   }
@@ -556,7 +558,7 @@ export default class UserController {
     ctx.body = `ShowUserDetail controller with ID = ${ctx.params.id}`;
     const userRepository = getManager().getRepository(User);
     const user = await userRepository.findOne(+ctx.params.id);
- 
+
     if (user) {
       ctx.status = 200;
       ctx.body = user;
@@ -570,7 +572,7 @@ export default class UserController {
     const userRepository = getManager().getRepository(User);
     await userRepository.update(+ctx.params.id, ctx.request.body);
     const updatedUser = await userRepository.findOne(+ctx.params.id);
- 
+
     if (updatedUser) {
       ctx.status = 200;
       ctx.body = updatedUser;
@@ -583,7 +585,7 @@ export default class UserController {
     ctx.body = `DeleteUser controller with ID = ${ctx.params.id}`;
     const userRepository = getManager().getRepository(User);
     await userRepository.delete(+ctx.params.id);
- 
+
     ctx.status = 204;
   }
 }
@@ -599,7 +601,7 @@ TypeORM 中操作数据模型主要是通过 `Repository` 实现的，在 Contro
 
 然后我们修改 `AuthController` ，实现具体的注册逻辑。由于密码不能明文保存在数据库中，需要使用非对称算法进行加密，这里我们使用曾经获得过密码加密大赛冠军的 Argon2 算法。安装对应的 npm 包：
 
-```shell
+```text
 npm install argon2
 ```
 
@@ -610,7 +612,7 @@ npm install argon2
 import { Context } from 'koa';
 import * as argon2 from 'argon2';
 import { getManager } from 'typeorm';
- 
+
 import { User } from '../entity/user';
 
 export default class AuthController {
@@ -619,15 +621,15 @@ export default class AuthController {
   public static async register(ctx: Context) {
     ctx.body = 'Register controller';
     const userRepository = getManager().getRepository(User);
- 
+
     const newUser = new User();
     newUser.name = ctx.request.body.name;
     newUser.email = ctx.request.body.email;
     newUser.password = await argon2.hash(ctx.request.body.password);
- 
+
     // 保存到数据库
     const user = await userRepository.save(newUser);
- 
+
     ctx.status = 201;
     ctx.body = user;
   }
@@ -636,7 +638,7 @@ export default class AuthController {
 
 确保服务器在运行之后，我们就可以开始测试一波了。首先是注册用户（这里我用 Postman 演示，直观一些）：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255546e4371a52)](https://static.powerformer.com/c/67e4c19/17255546e4371a52)
+![img](https://static.powerformer.com/c/67e4c19/17255546e4371a52)
 
 你可以继续注册几个用户，然后继续访问 `/users` 相关的路由，应该可以成功地获取、修改和删除相应的数据了！
 
@@ -646,7 +648,7 @@ JSON Web Token（JWT）是一种流行的 RESTful API 鉴权方案。这里我�
 
 首先安装相关的 npm 包：
 
-```shell
+```text
 npm install koa-jwt jsonwebtoken
 npm install @types/jsonwebtoken -D
 ```
@@ -685,7 +687,7 @@ router.post('/auth/login', AuthController.login);
 router.post('/auth/register', AuthController.register);
 unprotectedRouter.post('/auth/login', AuthController.login);
 unprotectedRouter.post('/auth/register', AuthController.register);
- 
+
 const protectedRouter = new Router();
 
 // users 相关的路由
@@ -727,10 +729,10 @@ createConnection()
     app.use(router.routes()).use(router.allowedMethods());
     // 无需 JWT Token 即可访问
     app.use(unprotectedRouter.routes()).use(unprotectedRouter.allowedMethods());
- 
+
     // 注册 JWT 中间件
     app.use(jwt({ secret: JWT_SECRET }).unless({ method: 'GET' }));
- 
+
     // 需要 JWT Token 才可访问
     app.use(protectedRouter.routes()).use(protectedRouter.allowedMethods());
 
@@ -761,13 +763,13 @@ export default class AuthController {
   public static async login(ctx: Context) {
     ctx.body = 'Login controller';
     const userRepository = getManager().getRepository(User);
- 
+
     const user = await userRepository
       .createQueryBuilder()
       .where({ name: ctx.request.body.name })
       .addSelect('User.password')
       .getOne();
- 
+
     if (!user) {
       ctx.status = 401;
       ctx.body = { message: '用户名不存在' };
@@ -801,13 +803,13 @@ export default class UserController {
 
   public static async updateUser(ctx: Context) {
     const userId = +ctx.params.id;
- 
+
     if (userId !== +ctx.state.user.id) {
       ctx.status = 403;
       ctx.body = { message: '无权进行此操作' };
       return;
     }
- 
+
     const userRepository = getManager().getRepository(User);
     await userRepository.update(+ctx.params.id, ctx.request.body);
     const updatedUser = await userRepository.findOne(+ctx.params.id);
@@ -819,13 +821,13 @@ export default class UserController {
 
   public static async deleteUser(ctx: Context) {
     const userId = +ctx.params.id;
- 
+
     if (userId !== +ctx.state.user.id) {
       ctx.status = 403;
       ctx.body = { message: '无权进行此操作' };
       return;
     }
- 
+
     const userRepository = getManager().getRepository(User);
     await userRepository.delete(+ctx.params.id);
     await userRepository.delete(userId);
@@ -1008,7 +1010,7 @@ createConnection()
         ctx.body = { message: err.message };
       }
     });
- 
+
     // ...
   })
   // ...
@@ -1018,7 +1020,6 @@ createConnection()
 
 至此，这篇教程就结束了。内容很多，希望对你有一定的帮助。我们的用户系统已经能够处理大部分情形，但是对于一些边际情况的处理依然很糟糕（能想到有哪些吗？）。不过话说回来，相信你已经确定 Koa 是一个很棒的框架了吧？
 
+> * **本文作者：** 图雀社区
+> * **本文链接：** [https://tuture.co/2020/05/22/fac8401/](https://tuture.co/2020/05/22/fac8401/)
 
-
-> - **本文作者：** 图雀社区
-> - **本文链接：** https://tuture.co/2020/05/22/fac8401/
