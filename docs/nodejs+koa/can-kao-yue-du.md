@@ -147,11 +147,11 @@ Hello Koa
 
 不过以个人观点，这个图实在是太像 “洋葱” 了，反而不太好理解。接下来我们将以更清晰直观的方式来感受 Koa 中间件的设计之美。首先我们来看一下 Express 的中间件是什么样的：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255546abea03b1.jpeg)](https://static.powerformer.com/c/67e4c19/17255546abea03b1.jpeg)
+![img](https://static.powerformer.com/c/67e4c19/17255546abea03b1.jpeg)
 
 请求（Request）直接依次贯穿各个中间件，最后通过请求处理函数返回响应（Response），非常简单。然后我们来看看 Koa 的中间件是什么样的：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255546d2d5409a.jpeg)](https://static.powerformer.com/c/67e4c19/17255546d2d5409a.jpeg)
+![img](https://static.powerformer.com/c/67e4c19/17255546d2d5409a.jpeg)
 
 可以看到，Koa 中间件不像 Express 中间件那样在请求通过了之后就完成了自己的使命；相反，中间件的执行清晰地分为**两个阶段**。我们马上来看下 Koa 中间件具体是什么样的。
 
@@ -232,7 +232,7 @@ app.use(bodyParser());
 
 这时候再访问我们的服务器（通过 Curl 或者其他请求工具），应该可以看到输出日志：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255546d5929a84.png)](https://static.powerformer.com/c/67e4c19/17255546d5929a84.png)
+![img](https://static.powerformer.com/c/67e4c19/17255546d5929a84.png)
 
 关于 Koa 框架本身的内容基本讲完了，但是对于一个比较完整的 Web 服务器来说，我们还需要更多的 “武器装备” 才能应对日常的业务逻辑。在接下来的部分，我们将通过社区的优秀组件来解决两个关键问题：路由和数据库，并演示如何结合 Koa 框架进行使用。
 
@@ -388,7 +388,7 @@ DeleteUser controller with ID = 123
 
 同时可以看到服务器的输出日志如下：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255546d5bffec3.png)](https://static.powerformer.com/c/67e4c19/17255546d5bffec3.png)
+![img](https://static.powerformer.com/c/67e4c19/17255546d5bffec3.png)
 
 路由已经接通，接下来就让我们来接入真实的数据吧！
 
@@ -666,7 +666,7 @@ export const JWT_SECRET = 'secret';
 
 有些路由我们希望只有已登录的用户才有权查看（_受保护的路由_），而另一些路由则是所有请求都可以访问（_不受保护的路由_）。在 Koa 的洋葱模型中，我们可以这样实现：
 
-[![img](https://static.powerformer.com/c/67e4c19/1725554705458c46.png)](https://static.powerformer.com/c/67e4c19/1725554705458c46.png)
+![img](https://static.powerformer.com/c/67e4c19/1725554705458c46.png)
 
 所有请求都可以直接访问未受保护的路由，但是受保护的路由就放在 JWT 中间件的后面（或者从洋葱模型的角度看是 “里面”），这样对于没有携带 JWT Token 的请求就直接返回，而不会继续传递下去。
 
@@ -841,11 +841,11 @@ export default class UserController {
 
 代码写完之后，我们用刚才注册的一个用户信息去访问登录 API：
 
-[![img](https://static.powerformer.com/c/67e4c19/172555470a1ccbb4.png)](https://static.powerformer.com/c/67e4c19/172555470a1ccbb4.png)
+![img](https://static.powerformer.com/c/67e4c19/172555470a1ccbb4.png)
 
 成功地获取到了 JWT Token！然后我们复制获取到的 Token，在接下来测试受保护的路由时，我们需要添加一个 `Authorization` 头部，值为 `Bearer <JWT_TOKEN>` ，如下图所示：
 
-[![img](https://static.powerformer.com/c/67e4c19/17255547098c88c4.png)](https://static.powerformer.com/c/67e4c19/17255547098c88c4.png)
+![img](https://static.powerformer.com/c/67e4c19/17255547098c88c4.png)
 
 然后就可以测试受保护的路由了！这里由于篇幅限制就省略了。
 
